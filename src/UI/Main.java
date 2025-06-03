@@ -3,15 +3,15 @@ package UI;
 import java.util.Scanner;
 
 public Class Main(){
-    public static void main(String[] args) {
+    public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         int entrada;
 
-        while (true){
+        while (true) {
             System.out.println("Insira uma das opções abaixo: ");
             System.out.println("[1] Gerenciar rota.");
             System.out.println("[2] Gerenciar veículo.");
-            System.out.println("[3] Venda de passagens.");
+            System.out.println("[3] Gerenciar passagens.");
             System.out.println("[0] Encerrar programa.");
             System.out.print("Opção: ");
 
@@ -24,7 +24,7 @@ public Class Main(){
                     int y;
 
                     System.out.println("O que deseja fazer?");
-                    System.out.println("[1] Criar rota."); 
+                    System.out.println("[1] Criar rota.");
                     System.out.println("[2] Atualizar rota.");
                     System.out.println("[3] Deletar rota.");
                     System.out.println("[0] Encerrar programa.");
@@ -81,7 +81,7 @@ public Class Main(){
 
                     x = scanner.nextInt();
 
-                    switch (x){
+                    switch (x) {
                         case 1:
 
                             System.out.println("Insira a marca do veículo: ");
@@ -92,7 +92,7 @@ public Class Main(){
 
                             System.out.println("Insira o ano do veículo: ");
                             int ano = scanner.nextInt();
-                            scanner.nextLine();  
+                            scanner.nextLine();
 
                             System.out.println("Insira a placa do veículo: ");
                             String placa = scanner.nextLine();
@@ -108,7 +108,7 @@ public Class Main(){
 
                         case 2:
 
-                            System.out.println("Qual veículo deseja atualizar? ");  
+                            System.out.println("Qual veículo deseja atualizar? ");
 
                             break;
 
@@ -133,7 +133,7 @@ public Class Main(){
 
                     System.out.println("O que deseja fazer?");
                     System.out.println("[1] Criar passagem.");
-                    System.out.println("[2] Atualizar passagem.");
+                    System.out.println("[2] Listar passagens.");
                     System.out.println("[3] Deletar passagem.");
                     System.out.println("[0] Encerrar programa.");
                     System.out.print("Opção: ");
@@ -172,27 +172,48 @@ public Class Main(){
                             System.out.println("Insira o preço da passagem: ");
                             double preco = scanner.nextDouble();
 
-                            System.out.println("Passagem criada com sucesso!");
 
+                            Passagem novaPassagem = new Passagem(
+                                    numeroPassagem, nomePassageiro, cpfPassageiro,
+                                    origem, destinoPassagem, dataViagem,
+                                    horarioSaida, poltrona, preco
+                            );
+
+                            repo.adicionarPassagem(novaPassagem);
+                            System.out.println("Passagem criada com sucesso!");
                             break;
+
+                        break;
 
                         case 2:
 
-                            System.out.println("Qual passagem deseja atualizar? ");
+                            System.out.println("\n--- LISTA DE PASSAGENS ---");
+                            for (Passagem p : repo.listarPassagens()) {
+                                System.out.println(p);
+                            }
 
                             break;
 
                         case 3:
 
-                            System.out.println("Qual passagem deseja deletar? ");
+                            System.out.print("Informe o número da passagem a remover: ");
+                            String numRemover = scanner.nextLine();
+                            if (repo.removerPassagem(numRemover)) {
+                                System.out.println("Passagem removida.");
+                            } else {
+                                System.out.println("Passagem não encontrada.");
+                            }
 
-                    break;
+                            break;
 
-                case 0:
-                    System.out.println("Encerrando programa...");
-                    time.sleep(2000);
-                    break;
+                        case 0:
+                            System.out.println("Encerrando programa...");
+                            time.sleep(2000);
+                            break;
+
+                        default:
+                            System.out.println("Opção inválida!");
+                    }
             }
         }
     }
-}
